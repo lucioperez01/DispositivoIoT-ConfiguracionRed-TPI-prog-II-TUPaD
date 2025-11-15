@@ -4,10 +4,16 @@
  */
 package dao.jdbc;
 
+import entities.ConfiguracionRed;
+
 /**
  *
  * @author Usuario
  */
 public class ConfiguracionRedDao {
+
+    public ConfiguracionRed crear(ConfiguracionRed c) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

@@ -9,5 +9,70 @@ package entities;
  * @author Usuario
  */
 public class ConfiguracionRed {
+     private Long id;
+    private boolean eliminado;
+    private String ip, mascara, gateway, dnsPrimario;
+    private boolean dhcpHabilitado;
+    
+    public ConfiguracionRed() {}
+    
+    public ConfiguracionRed(Long id, boolean eliminado, String ip, String mascara, String gateway,
+    String dnsPrimario, boolean dhcpHabilitado) {
+        this.id = id;
+        this.eliminado = eliminado;
+        this.ip = ip;
+        this.mascara = mascara;
+        this.gateway = gateway;
+        this.dnsPrimario = dnsPrimario;
+        this.dhcpHabilitado = dhcpHabilitado;
+    }
+    
+    //-------------------------------
+    //setters/getters
+    
+    public void setId(Long id) {
+        if (id != null) {
+            this.id = id;    
+        }
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public void setIp(String ip) {
+        if(ip != null) {
+            this.ip = ip;    
+        }
+    }
+
+    public void setMascara(String mascara) {
+        if(mascara != null) {
+            this.mascara = mascara;
+        }
+    }
+
+    public void setGateway(String gateway) {
+        if(gateway != null) {
+            this.gateway = gateway;
+        }
+    }
+
+    public void setDnsPrimario(String dnsPrimario) {
+        if(dnsPrimario != null) {
+            this.dnsPrimario = dnsPrimario;    
+        }
+    }
+
+    public void setDhcpHabilitado(boolean dhcpHabilitado) {
+        this.dhcpHabilitado = dhcpHabilitado;
+    }
+    
+    //toString
+
+    @Override
+    public String toString() {
+        return "ConfiguracionRed{" + "id=" + id + ", eliminado=" + eliminado + ", ip=" + ip + ", mascara=" + mascara + ", gateway=" + gateway + ", dnsPrimario=" + dnsPrimario + ", dhcpHabilitado=" + dhcpHabilitado + '}';
+    }
     
 }
