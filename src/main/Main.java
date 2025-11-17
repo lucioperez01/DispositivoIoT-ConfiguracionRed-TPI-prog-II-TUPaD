@@ -1,14 +1,23 @@
 package main;
 
+import config.DatabaseConnection;
 import dao.jdbc.JdbcDispositivoIoTDao;
 import dao.jdbc.JdbcConfiguracionRedDao;
 import entities.DispositivoIoT;
 import entities.ConfiguracionRed;
+import java.sql.Connection;
 import service.DispositivoIoTService;
 
 public class Main {
 
     public static void main(String[] args) {
+        
+        try (Connection c = DatabaseConnection.getConnection()) {
+            System.out.println("Conexión OK a la base de datos!");
+        } catch (Exception e) {
+            System.out.println("Error de conexión:");
+            e.printStackTrace();
+        }
 
         try {
             JdbcDispositivoIoTDao dispositivoDao = new JdbcDispositivoIoTDao();
@@ -17,7 +26,7 @@ public class Main {
 
             // Crear dispositivo IoT usando constructor simple
             DispositivoIoT d = new DispositivoIoT(
-                    "SN-900",
+                    "SN-100",
                     "ESP32",
                     "Deposito",
                     "1.0.1"
