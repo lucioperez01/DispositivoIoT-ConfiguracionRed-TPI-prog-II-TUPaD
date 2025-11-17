@@ -1,13 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
+import dao.jdbc.JdbcDispositivoIoTDao;
+import dao.jdbc.JdbcConfiguracionRedDao;
+import entities.ConfiguracionRed;
+import entities.DispositivoIoT;
+
 /**
- *
- * @author Usuario
+ * Servicio principal para la gestión de Dispositivos IoT
+ * y su configuración de red asociada.
  */
-public class DispositivoIotService {
-    
+public class DispositivoIoTService {
+
+	private final JdbcDispositivoIoTDao dispositivoDao = new JdbcDispositivoIoTDao();
+	private final JdbcConfiguracionRedDao configDao = new JdbcConfiguracionRedDao();
+
+	public long crearDispositivoConConfig(DispositivoIoT d, ConfiguracionRed c) throws Exception {
+
+		dispositivoDao.insertar(d);
+
+		long id = dispositivoDao.listar().getLast().getId();
+
+		c.setId(id);
+		configDao.insertar(c);
+
+		return id;
+	}
 }

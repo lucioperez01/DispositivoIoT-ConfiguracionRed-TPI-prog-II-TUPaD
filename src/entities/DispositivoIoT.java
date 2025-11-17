@@ -26,6 +26,15 @@ public class DispositivoIoT {
         this.firmwareVersion = firmwareVersion;
         this.configuracionRed = conf;
     }
+    
+    public DispositivoIoT(String serial, String modelo, String ubicacion, String firmwareVersion) {
+    this.serial = serial;
+    this.modelo = modelo;
+    this.ubicacion = ubicacion;
+    this.firmwareVersion = firmwareVersion;
+    this.eliminado = false;
+}
+    
     //-------------------------------
     // setters/getters
 
@@ -68,6 +77,35 @@ public class DispositivoIoT {
             this.configuracionRed = configuracionRed;
         }
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public String getFirmwareVersion() {
+        return firmwareVersion;
+    }
+
+    public ConfiguracionRed getConfiguracionRed() {
+        return configuracionRed;
+    }
+    
     
     //toString
 

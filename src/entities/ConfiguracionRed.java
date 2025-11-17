@@ -27,6 +27,26 @@ public class ConfiguracionRed {
         this.dhcpHabilitado = dhcpHabilitado;
     }
     
+    public ConfiguracionRed(String ip, String mascara, String gateway,
+                        String dnsPrimario, boolean dhcpHabilitado, Long id) {
+        this.ip = ip;
+        this.mascara = mascara;
+        this.gateway = gateway;
+        this.dnsPrimario = dnsPrimario;
+        this.dhcpHabilitado = dhcpHabilitado;
+        this.id = id;
+        this.eliminado = false; // por defecto
+}
+    
+    public ConfiguracionRed(String ip, String mascara, String gateway, String dnsPrimario, boolean dhcpHabilitado) {
+        this.ip = ip;
+        this.mascara = mascara;
+        this.gateway = gateway;
+        this.dnsPrimario = dnsPrimario;
+        this.dhcpHabilitado = dhcpHabilitado;
+        this.eliminado = false; // por defecto
+}
+    
     //-------------------------------
     //setters/getters
     
@@ -67,6 +87,35 @@ public class ConfiguracionRed {
     public void setDhcpHabilitado(boolean dhcpHabilitado) {
         this.dhcpHabilitado = dhcpHabilitado;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public String getMascara() {
+        return mascara;
+    }
+
+    public String getGateway() {
+        return gateway;
+    }
+
+    public String getDnsPrimario() {
+        return dnsPrimario;
+    }
+
+    public boolean isDhcpHabilitado() {
+        return dhcpHabilitado;
+    }
+    
     
     //toString
 

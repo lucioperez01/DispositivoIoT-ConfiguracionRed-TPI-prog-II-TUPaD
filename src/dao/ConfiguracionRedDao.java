@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package dao.jdbc;
+package dao;
 
 import entities.ConfiguracionRed;
 
-/**
- *
- * @author Usuario
- */
-public class ConfiguracionRedDao {
+public interface ConfiguracionRedDao {
 
-    public ConfiguracionRed crear(ConfiguracionRed c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+	void insertar(ConfiguracionRed c) throws Exception;
+
+	ConfiguracionRed buscarPorDispositivo(long dispositivoId) throws Exception;
 }
