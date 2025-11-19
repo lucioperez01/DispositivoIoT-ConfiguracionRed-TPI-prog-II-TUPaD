@@ -8,18 +8,16 @@ package entities;
  *
  * @author Usuario
  */
-public class ConfiguracionRed {
-     private Long id;
-    private boolean eliminado;
+public class ConfiguracionRed extends Base{
     private String ip, mascara, gateway, dnsPrimario;
     private boolean dhcpHabilitado;
     
-    public ConfiguracionRed() {}
+    public ConfiguracionRed() {};
     
+    // Constructor completo
     public ConfiguracionRed(Long id, boolean eliminado, String ip, String mascara, String gateway,
     String dnsPrimario, boolean dhcpHabilitado) {
-        this.id = id;
-        this.eliminado = eliminado;
+        super(id, eliminado);
         this.ip = ip;
         this.mascara = mascara;
         this.gateway = gateway;
@@ -27,25 +25,17 @@ public class ConfiguracionRed {
         this.dhcpHabilitado = dhcpHabilitado;
     }
     
+    // Constructor simple
     public ConfiguracionRed(String ip, String mascara, String gateway,
-                        String dnsPrimario, boolean dhcpHabilitado, Long id) {
-        this.ip = ip;
-        this.mascara = mascara;
-        this.gateway = gateway;
-        this.dnsPrimario = dnsPrimario;
-        this.dhcpHabilitado = dhcpHabilitado;
-        this.id = id;
-        this.eliminado = false; // por defecto
+                        String dnsPrimario, boolean dhcpHabilitado) {
+    this.ip = ip;
+    this.mascara = mascara;
+    this.gateway = gateway;
+    this.dnsPrimario = dnsPrimario;
+    this.dhcpHabilitado = dhcpHabilitado;
+    this.eliminado = false; // por defecto
 }
-    
-    public ConfiguracionRed(String ip, String mascara, String gateway, String dnsPrimario, boolean dhcpHabilitado) {
-        this.ip = ip;
-        this.mascara = mascara;
-        this.gateway = gateway;
-        this.dnsPrimario = dnsPrimario;
-        this.dhcpHabilitado = dhcpHabilitado;
-        this.eliminado = false; // por defecto
-}
+
     
     //-------------------------------
     //setters/getters

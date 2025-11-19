@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/macintosh/Desktop/UTN/Programacion%202/TPIntegrador/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/main/Main.java</file>
-            <file>file:/Users/macintosh/Desktop/UTN/Programacion%202/TPIntegrador/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/config/DatabaseConnection.java</file>
-            <file>file:/Users/macintosh/Desktop/UTN/Programacion%202/TPIntegrador/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/dao/jdbc/JdbcDispositivoIoTDao.java</file>
+            <file>file:/C:/Users/lgp_2/Desktop/Programacion%20Web/proyecto-trabajo-UTN-Nico/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/config/DatabaseConnection.java</file>
+            <file>file:/C:/Users/lgp_2/Desktop/Programacion%20Web/proyecto-trabajo-UTN-Nico/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/db.properties</file>
+            <file>file:/C:/Users/lgp_2/Desktop/Programacion%20Web/proyecto-trabajo-UTN-Nico/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/main/Main.java</file>
+            <file>file:/C:/Users/lgp_2/Desktop/Programacion%20Web/proyecto-trabajo-UTN-Nico/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/entities/ConfiguracionRed.java</file>
+            <file>file:/C:/Users/lgp_2/Desktop/Programacion%20Web/proyecto-trabajo-UTN-Nico/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD/src/entities/DispositivoIoT.java</file>
         </group>
     </open-files>
 </project-private>
