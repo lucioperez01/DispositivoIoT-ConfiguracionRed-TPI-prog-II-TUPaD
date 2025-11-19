@@ -1,14 +1,13 @@
 package service;
 
+import config.DatabaseConnection;
 import dao.jdbc.JdbcDispositivoIoTDao;
 import dao.jdbc.JdbcConfiguracionRedDao;
 import entities.ConfiguracionRed;
 import entities.DispositivoIoT;
 
-/**
- * Servicio principal para la gestión de Dispositivos IoT
- * y su configuración de red asociada.
- */
+import java.sql.Connection;
+
 public class DispositivoIoTService {
 
 	private final JdbcDispositivoIoTDao dispositivoDao = new JdbcDispositivoIoTDao();
@@ -16,13 +15,27 @@ public class DispositivoIoTService {
 
 	public long crearDispositivoConConfig(DispositivoIoT d, ConfiguracionRed c) throws Exception {
 
-		dispositivoDao.insertar(d);
+		try (Connection conn = DatabaseConnection.getConnection()) {
 
-		long id = dispositivoDao.listar().getLast().getId();
+			conn.setAutoCommit(false);
 
-		c.setId(id);
-		configDao.insertar(c);
+			// VALIDACIÓN DE SERIAL DUPLICADO
+			DispositivoIoT existente = dispositivoDao.buscarPorSerial(conn, d.getSerial());
+			if (existente != null)
+				throw new Exception("El serial ya existe: " + d.getSerial());
 
-		return id;
+			// INSERTAR DISPOSITIVO
+			long id = dispositivoDao.insertar(conn, d);
+
+			// INSERTAR CONFIGURACIÓN
+			c.setId(id);
+			configDao.insertar(conn, c);
+
+			conn.commit();
+			return id;
+
+		} catch (Exception ex) {
+			throw new Exception("Error transaccional al crear dispositivo + configuración", ex);
+		}
 	}
 }

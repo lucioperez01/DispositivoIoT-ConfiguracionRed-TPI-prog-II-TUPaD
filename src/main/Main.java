@@ -2,73 +2,86 @@ package main;
 
 import config.DatabaseConnection;
 import dao.jdbc.JdbcDispositivoIoTDao;
-import dao.jdbc.JdbcConfiguracionRedDao;
-import entities.DispositivoIoT;
 import entities.ConfiguracionRed;
-import java.sql.Connection;
+import entities.DispositivoIoT;
 import service.DispositivoIoTService;
+
+import java.sql.Connection;
 
 public class Main {
 
-    public static void main(String[] args) {
-        
-        try (Connection c = DatabaseConnection.getConnection()) {
-            System.out.println("Conexión OK a la base de datos!");
-        } catch (Exception e) {
-            System.out.println("Error de conexión:");
-            e.printStackTrace();
-        }
+	public static void main(String[] args) {
 
-        try {
-            JdbcDispositivoIoTDao dispositivoDao = new JdbcDispositivoIoTDao();
-            JdbcConfiguracionRedDao configDao = new JdbcConfiguracionRedDao();
-            DispositivoIoTService service = new DispositivoIoTService();
+		System.out.println("Verificando conexión a MySQL...");
+		try (Connection conn = DatabaseConnection.getConnection()) {
+			System.out.println("Conexión establecida correctamente.\n");
+		} catch (Exception e) {
+			System.out.println("No se pudo conectar a MySQL");
+			e.printStackTrace();
+			return;
+		}
 
-            // Crear dispositivo IoT usando constructor simple
-            DispositivoIoT d = new DispositivoIoT(
-                    "SN-100",
-                    "ESP32",
-                    "Deposito",
-                    "1.0.1"
-            );
+		try {
 
-            // Crear configuración de red usando constructor simple
-            ConfiguracionRed c = new ConfiguracionRed(
-                    "192.168.0.90",
-                    "255.255.255.0",
-                    "192.168.0.1",
-                    "8.8.8.8",
-                    false
-            );
+			DispositivoIoTService service = new DispositivoIoTService();
+			JdbcDispositivoIoTDao dao = new JdbcDispositivoIoTDao();
 
-            // Insertar ambos (service gestiona la relación)
-            long idGenerado = service.crearDispositivoConConfig(d, c);
+			// 1) CREAR DOS DISPOSITIVOS
+			DispositivoIoT d1 = new DispositivoIoT("SN-1004", "ESP32-CAM", "Laboratorio", "2.0.1");
+			ConfiguracionRed c1 = new ConfiguracionRed(null, false,
+					"192.168.0.50", "255.255.255.0", "192.168.0.1",
+					"8.8.8.8", false);
 
-            System.out.println("✔ Dispositivo IoT creado con ID: " + idGenerado);
+			DispositivoIoT d2 = new DispositivoIoT("SN-1005", "ESP8266", "Depósito", "1.1.0");
+			ConfiguracionRed c2 = new ConfiguracionRed(null, false,
+					"192.168.0.51", "255.255.255.0", "192.168.0.1",
+					"8.8.4.4", false);
 
-            // Mostrar datos
-            System.out.println("\n=== LISTANDO DISPOSITIVOS ===");
-            dispositivoDao.listar().forEach(System.out::println);
+			long id1 = service.crearDispositivoConConfig(d1, c1);
+			long id2 = service.crearDispositivoConConfig(d2, c2);
 
-            System.out.println("\n=== BUSCANDO DISPOSITIVO ===");
-            System.out.println(dispositivoDao.buscarPorId(idGenerado));
+			System.out.println("Dispositivos creados con IDs: " + id1 + " y " + id2 + "\n");
 
-            // Actualizar ejemplo
-            d.setId(idGenerado);
-            d.setUbicacion("Laboratorio");
-            dispositivoDao.actualizar(d);
-            System.out.println("\n✔ Dispositivo actualizado");
 
-            // Eliminación lógica
-            dispositivoDao.eliminarLogico(idGenerado);
-            System.out.println("\n✔ Dispositivo eliminado lógicamente");
+			// LISTAR TODOS
+			try (Connection conn = DatabaseConnection.getConnection()) {
+				System.out.println("=== LISTANDO DISPOSITIVOS ===");
+				dao.listar(conn).forEach(System.out::println);
+			}
 
-            // Listado final
-            System.out.println("\n=== LISTADO FINAL ===");
-            dispositivoDao.listar().forEach(System.out::println);
+			// BUSCAR POR ID
+			try (Connection conn = DatabaseConnection.getConnection()) {
+				System.out.println("\n=== BUSCANDO DISPOSITIVO ID " + id1 + " ===");
+				System.out.println(dao.buscarPorId(conn, id1));
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			// ACTUALIZAR
+			try (Connection conn = DatabaseConnection.getConnection()) {
+
+				DispositivoIoT actualizar = dao.buscarPorId(conn, id1);
+				actualizar.setUbicacion("Oficina Central");
+				actualizar.setFirmwareVersion("2.1.0");
+
+				dao.actualizar(conn, actualizar);
+
+				System.out.println("\nDispositivo actualizado.\n");
+			}
+
+			// ELIMINACIÓN LÓGICA
+			try (Connection conn = DatabaseConnection.getConnection()) {
+				dao.eliminarLogico(conn, id2);
+				System.out.println("Dispositivo id " + id2 + " eliminado lógicamente.\n");
+			}
+
+			// LISTADO FINAL
+			try (Connection conn = DatabaseConnection.getConnection()) {
+				System.out.println("=== LISTADO FINAL ===");
+				dao.listar(conn).forEach(System.out::println);
+			}
+
+		} catch (Exception e) {
+			System.out.println("ERROR:");
+			e.printStackTrace();
+		}
+	}
 }

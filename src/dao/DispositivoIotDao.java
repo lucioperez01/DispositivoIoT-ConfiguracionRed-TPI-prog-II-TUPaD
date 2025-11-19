@@ -1,17 +1,20 @@
 package dao;
 
 import entities.DispositivoIoT;
+import java.sql.Connection;
 import java.util.List;
 
 public interface DispositivoIoTDao {
 
-	void insertar(DispositivoIoT d) throws Exception;
+	long insertar(Connection conn, DispositivoIoT d) throws Exception;
 
-	DispositivoIoT buscarPorId(long id) throws Exception;
+	DispositivoIoT buscarPorId(Connection conn, long id) throws Exception;
 
-	List<DispositivoIoT> listar() throws Exception;
+	DispositivoIoT buscarPorSerial(Connection conn, String serial) throws Exception;
 
-	void actualizar(DispositivoIoT d) throws Exception;
+	List<DispositivoIoT> listar(Connection conn) throws Exception;
 
-	void eliminarLogico(long id) throws Exception;
+	void actualizar(Connection conn, DispositivoIoT d) throws Exception;
+
+	void eliminarLogico(Connection conn, long id) throws Exception;
 }

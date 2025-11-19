@@ -8,85 +8,63 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Implementación JDBC para Dispositivos IoT.
- */
 public class JdbcDispositivoIoTDao implements DispositivoIoTDao {
 
 	@Override
-	public void insertar(DispositivoIoT d) throws Exception {
-		String sql = """
-				INSERT INTO dispositivo_iot (serial, modelo, ubicacion, firmware_version)
-				VALUES (?, ?, ?, ?)
-				""";
+	public long insertar(Connection conn, DispositivoIoT d) throws Exception {
 
-		try (Connection conn = DatabaseConnection.getConnection();
-		     PreparedStatement ps = conn.prepareStatement(sql)) {
+		String sql = """
+			INSERT INTO dispositivo_iot (serial, modelo, ubicacion, firmware_version, eliminado)
+			VALUES (?, ?, ?, ?, FALSE)
+			""";
+
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			ps.setString(1, d.getSerial());
 			ps.setString(2, d.getModelo());
 			ps.setString(3, d.getUbicacion());
 			ps.setString(4, d.getFirmwareVersion());
+
 			ps.executeUpdate();
+
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) return rs.getLong(1);
+
+			throw new Exception("No se pudo obtener ID generado.");
 		}
 	}
 
 	@Override
-	public DispositivoIoT buscarPorId(long id) throws Exception {
-		String sql = "SELECT * FROM dispositivo_iot WHERE id=? AND eliminado=FALSE";
+	public DispositivoIoT buscarPorSerial(Connection conn, String serial) throws Exception {
+		String sql = "SELECT * FROM dispositivo_iot WHERE serial = ? LIMIT 1";
 
-		try (Connection conn = DatabaseConnection.getConnection();
-		     PreparedStatement ps = conn.prepareStatement(sql)) {
-
-			ps.setLong(1, id);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, serial);
 			ResultSet rs = ps.executeQuery();
 
 			if (!rs.next()) return null;
 
-			DispositivoIoT d = new DispositivoIoT();
-			d.setId(rs.getLong("id"));
-			d.setEliminado(rs.getBoolean("eliminado"));
-			d.setSerial(rs.getString("serial"));
-			d.setModelo(rs.getString("modelo"));
-			d.setUbicacion(rs.getString("ubicacion"));
-			d.setFirmwareVersion(rs.getString("firmware_version"));
-			return d;
+			return new DispositivoIoT(
+					rs.getLong("id"),
+					rs.getBoolean("eliminado"),
+					rs.getString("serial"),
+					rs.getString("modelo"),
+					rs.getString("ubicacion"),
+					rs.getString("firmware_version"),
+					null
+			);
 		}
 	}
 
 	@Override
-	public List<DispositivoIoT> listar() throws Exception {
-		List<DispositivoIoT> lista = new ArrayList<>();
-		String sql = "SELECT * FROM dispositivo_iot WHERE eliminado=FALSE";
-
-		try (Connection conn = DatabaseConnection.getConnection();
-		     PreparedStatement ps = conn.prepareStatement(sql);
-		     ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				DispositivoIoT d = new DispositivoIoT();
-				d.setId(rs.getLong("id"));
-				d.setSerial(rs.getString("serial"));
-				d.setModelo(rs.getString("modelo"));
-				d.setUbicacion(rs.getString("ubicacion"));
-				d.setFirmwareVersion(rs.getString("firmware_version"));
-				lista.add(d);
-			}
-		}
-		return lista;
-	}
-
-	@Override
-	public void actualizar(DispositivoIoT d) throws Exception {
+	public void actualizar(Connection conn, DispositivoIoT d) throws Exception {
 		String sql = """
-				UPDATE dispositivo_iot SET 
-				serial=?, modelo=?, ubicacion=?, firmware_version=?
-				WHERE id=? AND eliminado=FALSE
-				""";
+			UPDATE dispositivo_iot 
+			SET serial=?, modelo=?, ubicacion=?, firmware_version=?
+			WHERE id=? AND eliminado=FALSE
+			""";
 
-		try (Connection conn = DatabaseConnection.getConnection();
-		     PreparedStatement ps = conn.prepareStatement(sql)) {
-
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, d.getSerial());
 			ps.setString(2, d.getModelo());
 			ps.setString(3, d.getUbicacion());
@@ -97,13 +75,62 @@ public class JdbcDispositivoIoTDao implements DispositivoIoTDao {
 	}
 
 	@Override
-	public void eliminarLogico(long id) throws Exception {
+	public void eliminarLogico(Connection conn, long id) throws Exception {
 		String sql = "UPDATE dispositivo_iot SET eliminado=TRUE WHERE id=?";
 
-		try (Connection conn = DatabaseConnection.getConnection();
-		     PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setLong(1, id);
 			ps.executeUpdate();
 		}
 	}
+
+	@Override
+	public DispositivoIoT buscarPorId(Connection conn, long id) throws Exception {
+
+		String sql = "SELECT * FROM dispositivo_iot WHERE id = ? LIMIT 1";
+
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (!rs.next()) return null;
+
+			return new DispositivoIoT(
+					rs.getLong("id"),
+					rs.getBoolean("eliminado"),
+					rs.getString("serial"),
+					rs.getString("modelo"),
+					rs.getString("ubicacion"),
+					rs.getString("firmware_version"),
+					null
+			);
+		}
+	}
+
+    @Override
+    public List<DispositivoIoT> listar(Connection conn) throws Exception {
+
+	String sql = "SELECT * FROM dispositivo_iot WHERE eliminado = FALSE";
+
+	List<DispositivoIoT> lista = new ArrayList<>();
+
+	try (PreparedStatement ps = conn.prepareStatement(sql);
+	     ResultSet rs = ps.executeQuery()) {
+
+		while (rs.next()) {
+			DispositivoIoT d = new DispositivoIoT(
+					rs.getLong("id"),
+					rs.getBoolean("eliminado"),
+					rs.getString("serial"),
+					rs.getString("modelo"),
+					rs.getString("ubicacion"),
+					rs.getString("firmware_version"),
+					null
+			);
+			lista.add(d);
+		}
+	}
+
+	return lista;
+    }
 }
