@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao.jdbc;
 
 import com.sun.jdi.connect.spi.Connection;
 import java.util.List;
 
-/**
- *
- * @author lucioperez01
- */
 public interface GenericDao<T> {
  
     T crear(T t) throws Exception;

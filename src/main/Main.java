@@ -27,12 +27,12 @@ public class Main {
 			JdbcDispositivoIoTDao dao = new JdbcDispositivoIoTDao();
 
 			// 1) CREAR DOS DISPOSITIVOS
-			DispositivoIoT d1 = new DispositivoIoT("SN-1004", "ESP32-CAM", "Laboratorio", "2.0.1");
+			DispositivoIoT d1 = new DispositivoIoT("SN-1208", "ESP32-CAM", "Laboratorio", "2.0.1");
 			ConfiguracionRed c1 = new ConfiguracionRed(null, false,
 					"192.168.0.50", "255.255.255.0", "192.168.0.1",
 					"8.8.8.8", false);
 
-			DispositivoIoT d2 = new DispositivoIoT("SN-1005", "ESP8266", "Depósito", "1.1.0");
+			DispositivoIoT d2 = new DispositivoIoT("SN-1185", "ESP8266", "Depósito", "1.1.0");
 			ConfiguracionRed c2 = new ConfiguracionRed(null, false,
 					"192.168.0.51", "255.255.255.0", "192.168.0.1",
 					"8.8.4.4", false);

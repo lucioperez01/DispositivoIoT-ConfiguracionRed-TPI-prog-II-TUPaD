@@ -19,7 +19,7 @@ public class DispositivoIoTService {
 
 			conn.setAutoCommit(false);
 
-			// VALIDACIÓN DE SERIAL DUPLICADO
+			// VALIDACION DE SERIAL DUPLICADO
 			DispositivoIoT existente = dispositivoDao.buscarPorSerial(conn, d.getSerial());
 			if (existente != null)
 				throw new Exception("El serial ya existe: " + d.getSerial());
@@ -27,7 +27,7 @@ public class DispositivoIoTService {
 			// INSERTAR DISPOSITIVO
 			long id = dispositivoDao.insertar(conn, d);
 
-			// INSERTAR CONFIGURACIÓN
+			// INSERTAR CONFIGURACION
 			c.setId(id);
 			configDao.insertar(conn, c);
 
