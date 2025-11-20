@@ -83,5 +83,9 @@ public class Main {
 			System.out.println("ERROR:");
 			e.printStackTrace();
 		}
+                
+        //Menu de consola       
+        AppMenu menu = new AppMenu();
+        menu.iniciar();   
 	}
 }
