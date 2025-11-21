@@ -141,11 +141,11 @@ Opción:
 
 | Nombre | Rol |
 |--------|------|
-| **[Danilo Peirano]** | Programación general |
-| **[Pérez Lucio]** | DAO + JDBC |
-| **[Valentin Piñeyro]** | SQL + pruebas |
-| **[Pérez Leandro]** | Documentación + menú |
-| **Grupo:** 46_DispositivoIoT_ConfiguracionRed | **Comisión:** X |
+| **Danilo Peirano** | Programación general |
+| **Pérez Lucio** | DAO + JDBC |
+| **Valentin Piñeyro** | SQL + pruebas |
+| **Pérez Leandro** | Documentación + menú |
+| **Grupo:** 46_DispositivoIoT_ConfiguracionRed | **Comisión:** 5 |
 
 ---
 
