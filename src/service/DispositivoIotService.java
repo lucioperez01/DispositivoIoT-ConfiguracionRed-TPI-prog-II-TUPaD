@@ -35,7 +35,7 @@ public class DispositivoIoTService {
 			return id;
 
 		} catch (Exception ex) {
-			throw new Exception("Error transaccional al crear dispositivo + configuración", ex);
+			throw new Exception("Error transaccional al crear dispositivo", ex);
 		}
 	}
 }

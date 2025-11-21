@@ -143,7 +143,7 @@ Opción:
 | **[Pérez Lucio]** | DAO + JDBC |
 | **[Valentin Piñeyro]** | SQL + pruebas |
 | **[Pérez Leandro]** | Documentación + menú |
-| **Grupo:** 47_DispositivoIoT_ConfiguracionRed | **Comisión:** X |
+| **Grupo:** 46_DispositivoIoT_ConfiguracionRed | **Comisión:** X |
 
 ---
 
