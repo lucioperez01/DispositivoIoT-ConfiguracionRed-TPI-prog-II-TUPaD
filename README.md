@@ -1,4 +1,4 @@
-[README .md](https://github.com/user-attachments/files/23664980/README.md)
+[README .md](https://github.com/user-attachments/files/23666034/README.md)
 # <img src="https://bignews.ar/wp-content/uploads/2023/05/utn-nacional.jpg" width="200">  
 # **Trabajo Práctico Integrador – Programación II (UTN)**  
 ### *Dispositivos IoT – JDBC – CRUD – Menú de Consola*
@@ -10,6 +10,8 @@
 ---
 
 ## 📌 **Descripción del Proyecto**
+
+🎥 **Presentación en video y documentacion:** [https://drive.google.com/drive/folders/1GZjmk3FO-h7m5-9CJsfujR49Vq2YAQDX?usp=drive_link]
 
 Este repositorio contiene el **Trabajo Integrador de Programación II**, cuyo objetivo es desarrollar una aplicación de consola en Java que administre **Dispositivos IoT** y su **Configuración de Red**, utilizando:
 
@@ -153,4 +155,7 @@ Proyecto académico para la **Universidad Tecnológica Nacional**
 Materia: **Programación II**  
 Año **2025**
 
+
+> **Repositorio del trabajo:**  
+> [https://github.com/lucioperez01/DispositivoIoT-ConfiguracionRed-TPI-prog-II-TUPaD.git]
 ---
